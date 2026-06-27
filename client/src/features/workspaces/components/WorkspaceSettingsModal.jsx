@@ -51,8 +51,8 @@ export default function WorkspaceSettingsModal({ isOpen, onClose, workspaceId })
   if (loading) return <div className="p-4 text-center">Loading settings...</div>;
   if (!workspace) return <div className="p-4 text-destructive">Workspace not found</div>;
 
-  const isOwner = String(workspace.owner) === String(user.id);
-  const myMemberInfo = workspace.members?.find(m => String(m.user?._id || m.user) === String(user.id));
+  const isOwner = String(workspace.owner) === String(user?._id || user?.id);
+  const myMemberInfo = workspace.members?.find(m => String(m.user?._id || m.user) === String(user?._id || user?.id));
   const myRole = isOwner ? 'Owner' : (myMemberInfo?.role || 'Viewer');
   const canManageMembers = myRole === 'Owner' || myRole === 'Admin';
 

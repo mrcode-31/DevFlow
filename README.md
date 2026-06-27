@@ -1,4 +1,4 @@
-# DevHub - Project Management Platform
+# DevFlow - Project Management Platform
 
 DevHub is a full-stack, enterprise-grade project management application inspired by Jira. It is designed to help engineering and marketing teams collaborate seamlessly with role-based permissions, real-time Kanban boards, and insightful dashboard analytics.
 

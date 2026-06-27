@@ -147,11 +147,20 @@ const getProject = async (req, res, next) => {
       .populate('members', 'name avatar email')
       .populate({
         path: 'workspace',
-        select: 'members owner name'
+        populate: {
+          path: 'members.user',
+          select: 'name email avatar'
+        }
       });
     if (!project) return res.status(404).json(errorResponse('Project not found'));
     
-    res.status(200).json(successResponse('Project fetched', project));
+    const projectObj = project.toObject();
+    // Overwrite project members with workspace members to fix older projects missing new invites
+    if (projectObj.workspace && projectObj.workspace.members) {
+      projectObj.members = projectObj.workspace.members.map(m => m.user).filter(Boolean);
+    }
+    
+    res.status(200).json(successResponse('Project fetched', projectObj));
   } catch (error) {
     next(error);
   }

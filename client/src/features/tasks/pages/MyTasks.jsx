@@ -27,7 +27,8 @@ export default function MyTasks() {
     'Todo': tasks.filter(t => t.status === 'Todo'),
     'In Progress': tasks.filter(t => t.status === 'In Progress'),
     'Review': tasks.filter(t => t.status === 'Review'),
-    'Done': tasks.filter(t => t.status === 'Done')
+    'Done': tasks.filter(t => t.status === 'Done'),
+    'Backlog': tasks.filter(t => t.status === 'Backlog')
   };
 
   const priorityColors = {
@@ -61,7 +62,8 @@ export default function MyTasks() {
                 <div className={`w-3 h-3 rounded-full ${
                   status === 'Done' ? 'bg-green-500' :
                   status === 'Review' ? 'bg-orange-500' :
-                  status === 'In Progress' ? 'bg-blue-500' : 'bg-muted-foreground'
+                  status === 'In Progress' ? 'bg-blue-500' : 
+                  status === 'Backlog' ? 'bg-purple-500' : 'bg-muted-foreground'
                 }`} />
                 {status}
                 <span className="text-sm font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">

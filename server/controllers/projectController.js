@@ -54,9 +54,13 @@ const createProject = async (req, res, next) => {
 
     req.body.workspace = workspaceId;
     req.body.createdBy = req.user.id;
-    // Auto-add creator as member
-    if (!req.body.members) req.body.members = [];
-    req.body.members.push(req.user.id);
+    
+    // Auto-add ALL workspace members to the project so they can be assigned tasks
+    req.body.members = workspace.members.map(m => m.user);
+    // Ensure the creator is also included if they aren't explicitly in the members array
+    if (!req.body.members.includes(req.user.id)) {
+      req.body.members.push(req.user.id);
+    }
 
     const project = await Project.create(req.body);
 

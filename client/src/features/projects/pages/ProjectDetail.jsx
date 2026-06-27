@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../../shared/context/AuthContext';
 import KanbanBoard from '../../kanban/components/KanbanBoard';
 import Modal from '../../../shared/components/Modal';
 import CreateTaskModal from '../../tasks/components/CreateTaskModal';
 import TaskDrawer from '../../tasks/components/TaskDrawer';
-import { Plus, Settings2 } from 'lucide-react';
+import { Plus, Settings2, ArrowLeft } from 'lucide-react';
 
 export default function ProjectDetail() {
   const { projectId } = useParams();
@@ -49,8 +49,6 @@ export default function ProjectDetail() {
 
   if (loading) return <div className="animate-pulse p-4">Loading Kanban Board...</div>;
 
-  if (loading) return <div className="animate-pulse p-4">Loading Kanban Board...</div>;
-
   const { user } = useAuth();
   
   // Determine my role in this project from the workspace
@@ -62,9 +60,18 @@ export default function ProjectDetail() {
   return (
     <div className="h-full flex flex-col relative overflow-hidden">
       <div className="flex justify-between items-center mb-6 shrink-0">
-        <div>
-          <h1 className="text-2xl font-bold">{project?.name || 'Board'}</h1>
-          <p className="text-xs text-muted-foreground mt-1">Role: {myRole}</p>
+        <div className="flex items-center gap-3">
+          <Link 
+            to={project?.workspace?._id ? `/workspaces/${project.workspace._id}` : "/dashboard"}
+            className="p-1.5 hover:bg-muted rounded-md transition-colors -ml-2"
+            title="Back to Workspace"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
+          <div>
+            <h1 className="text-2xl font-bold">{project?.name || 'Board'}</h1>
+            <p className="text-xs text-muted-foreground mt-1">Role: {myRole}</p>
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <button className="p-2 text-muted-foreground hover:bg-muted rounded-md transition-colors">

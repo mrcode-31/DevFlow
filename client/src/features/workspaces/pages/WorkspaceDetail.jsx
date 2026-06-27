@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../../shared/context/AuthContext';
-import { Plus, Folder, Star, Settings2 } from 'lucide-react';
+import { Plus, Folder, Star, Settings2, ArrowLeft } from 'lucide-react';
 import Modal from '../../../shared/components/Modal';
 import CreateProjectModal from '../../projects/components/CreateProjectModal';
 import WorkspaceSettingsModal from '../components/WorkspaceSettingsModal';
@@ -68,6 +68,13 @@ export default function WorkspaceDetail() {
       <div className="flex justify-between items-start">
         <div>
           <div className="flex items-center gap-3">
+            <Link 
+              to="/dashboard"
+              className="p-1.5 hover:bg-muted rounded-md transition-colors -ml-2"
+              title="Back to Dashboard"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Link>
             <h1 className="text-3xl font-bold">{workspace.name}</h1>
             {canManageSettings && (
               <button 

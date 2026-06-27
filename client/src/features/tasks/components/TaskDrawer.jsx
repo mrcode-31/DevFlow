@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useAuth } from '../../../shared/context/AuthContext';
 import { X, MessageSquare, History, AlignLeft, Clock } from 'lucide-react';
 
@@ -244,6 +245,7 @@ export default function TaskDrawer({ taskId, isOpen, onClose, members = [], canM
           )}
         </div>
       </div>
-    </>
+    </>,
+    document.body
   );
 }

@@ -165,6 +165,9 @@ const addMember = async (req, res, next) => {
     workspace.members.push({ user: userToAdd._id, role: role || 'Viewer' });
     await workspace.save();
 
+    await workspace.populate('owner', 'name email avatar');
+    await workspace.populate('members.user', 'name email avatar');
+
     res.status(200).json(successResponse('Member added successfully', workspace));
   } catch (error) {
     next(error);

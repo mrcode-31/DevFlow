@@ -1,4 +1,5 @@
 const Workspace = require('../models/Workspace');
+const Notification = require('../models/Notification');
 const { errorResponse, successResponse } = require('../utils/response');
 
 /**
@@ -167,6 +168,14 @@ const addMember = async (req, res, next) => {
 
     await workspace.populate('owner', 'name email avatar');
     await workspace.populate('members.user', 'name email avatar');
+
+    // Create Notification for the invited user
+    await Notification.create({
+      user: userToAdd._id,
+      content: `You have been added to the workspace "${workspace.name}" as a ${role || 'Viewer'}.`,
+      type: 'System',
+      link: `/workspaces/${workspace._id}`
+    });
 
     res.status(200).json(successResponse('Member added successfully', workspace));
   } catch (error) {

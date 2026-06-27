@@ -53,7 +53,7 @@ export default function TaskDrawer({ taskId, isOpen, onClose, members = [], canM
     }
   };
 
-  return (
+  return createPortal(
     <>
       {/* Backdrop */}
       {isOpen && (

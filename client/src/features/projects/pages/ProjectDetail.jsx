@@ -9,7 +9,7 @@ import { Plus, Settings2, ArrowLeft } from 'lucide-react';
 
 export default function ProjectDetail() {
   const { projectId } = useParams();
-  const { api } = useAuth();
+  const { api, user } = useAuth();
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,8 +49,6 @@ export default function ProjectDetail() {
 
   if (loading) return <div className="animate-pulse p-4">Loading Kanban Board...</div>;
 
-  const { user } = useAuth();
-  
   // Determine my role in this project from the workspace
   const isOwner = String(project?.workspace?.owner) === String(user?._id || user?.id);
   const myMemberInfo = project?.workspace?.members?.find(m => String(m.user?._id || m.user) === String(user?._id || user?.id));
